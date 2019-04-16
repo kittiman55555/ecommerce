@@ -1,0 +1,8 @@
+venv
+*.pyc
+staticfiles
+.env
+Include
+Lib
+Scripts
+tcl
