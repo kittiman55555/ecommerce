@@ -21,11 +21,22 @@ class ProductFeaturedListView(ListView):
 
 class ProductFeaturedDetailView(DetailView):
     tempalte_name = "products/featured-detail.html"
- 
+                            
     def get_queryset(self, *args, **kwargs):
         request = self.request
         return Product.objects.featured()
 
+class ProductDetailSlugView(DetailView):
+    queryset = Product.objects.all()
+    template_name = "product/detail.html"
+
+    def get_objects(self, *args, **kwargs):
+        request = self.request
+        pk = self.kwargs.get('slug')
+        instance = Product.objects.get_queryset(pk)
+        if instance is None:
+            raise Http404("product doesn't exist")
+        return instance
 
 def product_list_view(request):
     queryset = Product.objects.all()
