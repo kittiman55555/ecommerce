@@ -16,12 +16,26 @@ def upload_image_path(path, filename):
         final_filename=final_filename
     )
 
+class ProductManager(models.Manager):
+    def featured(self):
+        return self.get_queryset().filter(featured=True)
+        
+    def get_by_id(self,id ):
+        qs =  self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+
 class Product(models.Model): 
     title = models.CharField(max_length=120)
     desc = models.TextField()
     price = models.DecimalField(max_digits=20, decimal_places=2)
     image = models.ImageField(upload_to='products/%Y/%m/%d/', null=True, blank=True)
+    featured = models.BooleanField(default=False)
 
+    objects = ProductManager()
+    
     def __str__(self):
         return self.title
 
