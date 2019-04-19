@@ -22,7 +22,8 @@ from products.views import (
     ProductListView, 
     product_detail_view,
     ProductFeaturedListView,
-    ProductFeaturedDetailView
+    ProductFeaturedDetailView,
+    ProductDetailSlugView
 )
 from .view import home_page, login_page, register_page
 
@@ -32,7 +33,8 @@ urlpatterns = [
     path('featured/', ProductFeaturedListView.as_view()), 
     path('featured/<int:pk>', ProductFeaturedDetailView.as_view()),
     path('products/',product_list_view , name='product_list_view'), 
-    path('products/<int:pk>',product_detail_view , name='product_detail_view'),
+    path('products/<int:pk>/',product_detail_view , name='product_detail_view'),
+    path('products/<slug:slug>/',ProductDetailSlugView.as_view()),
     path('login/',login_page , name='login_page'),
     path('register/',register_page , name='register_page'),
     #path('products/',ProductListView.as_view() , name='product_list_view'), 

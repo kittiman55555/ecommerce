@@ -30,13 +30,20 @@ class ProductDetailSlugView(DetailView):
     queryset = Product.objects.all()
     template_name = "product/detail.html"
 
-    def get_objects(self, *args, **kwargs):
-        request = self.request
-        pk = self.kwargs.get('slug')
-        instance = Product.objects.get_queryset(pk)
-        if instance is None:
-            raise Http404("product doesn't exist")
-        return instance
+    # def get_object(self, *args, **kwargs):
+    #     request = self.request
+    #     slug = self.kwargs.get('slug')
+    #     #instance = get_object_or_404(Product, slug=slug, active=True)
+    #     # try:
+    #     #     instance = Product.objects.get(slug=slug, active=True)
+    #     # except Product.DoesNotExist:
+    #     #     raise Http404("Not found..")
+    #     # except Product.MultipleObjectsReturned:
+    #     #     qs = Product.objects.filter(slug=slug, active=True)
+    #     #     instance = qs.first()
+    #     # except:
+    #     #     raise Http404("Uhhhh")
+    #     # return instance
 
 def product_list_view(request):
     queryset = Product.objects.all()
@@ -59,6 +66,6 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     # else:
     #     raise Http404("Product doesn't exist")
     context = { 
-        'object_list' : instance
+        'queryset' : instance
     }
     return render(request, "products/detail.html", context)
